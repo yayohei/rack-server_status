@@ -7,7 +7,6 @@ group :development, :test do
   gem 'pry'
 end
 group :test do
-  gem 'rack'
+  gem 'rack', "< 3" # https://github.com/rack/rack/issues/1592
   gem 'timecop'
 end
-
