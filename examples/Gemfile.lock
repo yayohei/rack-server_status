@@ -8,7 +8,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     kgio (2.11.2)
+    ltsv_log_formatter (1.0.0)
     parallel (1.12.1)
+    rack (3.1.8)
     raindrops (0.19.0)
     unicorn (5.4.0)
       kgio (~> 2.6)
@@ -18,9 +20,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ltsv_log_formatter
   parallel
+  rack
   unicorn
   worker_scoreboard!
 
 BUNDLED WITH
-   1.16.1
+   1.17.2

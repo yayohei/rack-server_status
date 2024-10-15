@@ -49,5 +49,27 @@ describe Rack::ServerStatus do
       expect(response.headers['content-type']).to eq 'application/json; charset=utf-8'
     end
   end
+
+  context 'return valid server-status' do
+    subject do
+      Rack::Lint.new(Rack::ServerStatus.new(app, scoreboard_path: Dir.tmpdir, perf_log_path: STDOUT))
+    end
+    it do
+      response = Rack::MockRequest.new(subject).get('/server-status')
+      expect(response.successful?).to be_truthy
+      expect(response.headers['content-type']).to eq 'text/plain'
+    end
+  end
+
+  context 'return json valid server-status' do
+    subject do
+      Rack::Lint.new(Rack::ServerStatus.new(app, scoreboard_path: Dir.tmpdir, perf_log_path: STDOUT))
+    end
+    it do
+      response = Rack::MockRequest.new(subject).get('/server-status?json')
+      expect(response.successful?).to be_truthy
+      expect(response.headers['content-type']).to eq 'application/json; charset=utf-8'
+    end
+  end
 end
 
