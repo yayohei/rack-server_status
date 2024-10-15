@@ -58,7 +58,7 @@ module Rack
 
     def handle_server_status(env)
       unless allowed?(env['REMOTE_ADDR'])
-        return [403, {'Content-Type' => 'text/plain'}, [ 'Forbidden' ]]
+        return [403, {'content-type' => 'text/plain'}, [ 'Forbidden' ]]
       end
 
       upsince = Time.now.to_i - @uptime
@@ -123,9 +123,9 @@ EOF
         status[:WARN] = 'Scoreboard has been disabled'
       end
       if (env['QUERY_STRING'] || '') =~ /\bjson\b/
-        return [200, {'Content-Type' => 'application/json; charset=utf-8'}, [status.to_json]]
+        return [200, {'content-type' => 'application/json; charset=utf-8'}, [status.to_json]]
       end
-      return [200, {'Content-Type' => 'text/plain'}, [body]]
+      return [200, {'content-type' => 'text/plain'}, [body]]
     end
   end
 end
