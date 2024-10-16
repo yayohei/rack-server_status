@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 describe Rack::ServerStatus do
   app = lambda { |env|
-    [200, {'Content-Type' => 'text/plain'}, ["Hello, World!"]]
+    [200, {'content-type' => 'text/plain'}, ["Hello, World!"]]
   }
 
   context 'confirm to Rack::Lint' do
@@ -35,7 +35,7 @@ describe Rack::ServerStatus do
     it do
       response = Rack::MockRequest.new(subject).get('/server-status')
       expect(response.successful?).to be_truthy
-      expect(response.headers['Content-Type']).to eq 'text/plain'
+      expect(response.headers['content-type']).to eq 'text/plain'
     end
   end
 
@@ -46,7 +46,29 @@ describe Rack::ServerStatus do
     it do
       response = Rack::MockRequest.new(subject).get('/server-status?json')
       expect(response.successful?).to be_truthy
-      expect(response.headers['Content-Type']).to eq 'application/json; charset=utf-8'
+      expect(response.headers['content-type']).to eq 'application/json; charset=utf-8'
+    end
+  end
+
+  context 'return valid server-status' do
+    subject do
+      Rack::Lint.new(Rack::ServerStatus.new(app, scoreboard_path: Dir.tmpdir, perf_log_path: STDOUT))
+    end
+    it do
+      response = Rack::MockRequest.new(subject).get('/server-status')
+      expect(response.successful?).to be_truthy
+      expect(response.headers['content-type']).to eq 'text/plain'
+    end
+  end
+
+  context 'return json valid server-status' do
+    subject do
+      Rack::Lint.new(Rack::ServerStatus.new(app, scoreboard_path: Dir.tmpdir, perf_log_path: STDOUT))
+    end
+    it do
+      response = Rack::MockRequest.new(subject).get('/server-status?json')
+      expect(response.successful?).to be_truthy
+      expect(response.headers['content-type']).to eq 'application/json; charset=utf-8'
     end
   end
 end
