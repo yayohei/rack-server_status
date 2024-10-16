@@ -1,6 +1,4 @@
 source 'https://rubygems.org'
 gem 'unicorn'
-gem 'rack'
 gem 'worker_scoreboard', git: 'https://github.com/SpringMT/worker_scoreboard.git'
-gem 'ltsv_log_formatter'
 gem 'parallel'
